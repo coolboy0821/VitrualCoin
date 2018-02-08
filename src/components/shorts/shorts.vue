@@ -2,8 +2,9 @@
   <div>
     <panel :list="formatedShortNews" type="4" @click.native="showHaibao"></panel>
     <div v-transfer-dom>
-      <x-dialog v-model="haibaoIsShow">
-        aaaaa
+      <x-dialog v-model="haibaoIsShow" :dialog-style="{'max-width': '100%', width: '100%', height: '50%', 'background-color': 'transparent'}">
+        <haibao text="bbbbbbbbbbbbbbbbbbbbbb" time="12:12"></haibao>
+        <i class="fa fa-fw fa-times" style="fill:#fff;"></i>
       </x-dialog>
     </div>
   </div>
@@ -11,6 +12,8 @@
 
 <script>
 import { Panel, XDialog, TransferDomDirective as TransferDom } from 'vux';
+import haibao from '../haibao/haibao';
+
 export default {
   data() {
     return {
@@ -47,7 +50,8 @@ export default {
   },
   components: {
     Panel,
-    XDialog
+    XDialog,
+    haibao
   },
   methods: {
     showHaibao() {
