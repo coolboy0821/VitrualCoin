@@ -1,51 +1,46 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-     <tabbar @on-index-change="ontabbarIndexChange">
-      <tabbar-item selected link="/">
-        <i slot="icon" class="fa fa-fw fa-user"></i>
-        <i slot="icon-active" class="fa fa-fw fa-users"></i>
-        <span slot="label">短讯</span>
-      </tabbar-item>
-      <tabbar-item link="/specials">
-        <i slot="icon" class="fa fa-fw fa-times"></i>
-        <span slot="label">专栏</span>
-      </tabbar-item>
-    </tabbar>
+    <view-box ref="viewBox">
+      <router-view :short-news="shortNews"></router-view>
+      <tabbar slot="bottom" class="tabbar">
+        <tabbar-item selected link="/">
+          <i slot="icon" class="fa fa-fw fa-user"></i>
+          <i slot="icon-active" class="fa fa-fw fa-users"></i>
+          <span slot="label">短讯</span>
+        </tabbar-item>
+        <tabbar-item link="/specials">
+          <i slot="icon" class="fa fa-fw fa-times"></i>
+          <span slot="label">专栏</span>
+        </tabbar-item>
+      </tabbar>
+    </view-box>
   </div>
 </template>
 
 <script>
-import { Tabbar, TabbarItem, Confirm } from 'vux';
+import { Tabbar, TabbarItem, Confirm, ViewBox } from 'vux';
+
+const ERR_OK = 0;
 
 export default {
+  data() {
+    return {
+      shortNews: []
+    };
+  },
   components: {
     Tabbar,
     TabbarItem,
-    Confirm
+    Confirm,
+    'view-box': ViewBox
   },
-  methods: {
-    ontabbarIndexChange(idx) {
-      this.showPlugin(idx);
-    },
-    showPlugin(val) {
-      this.$vux.confirm.show({
-        title: 'Title' + val,
-        content: 'Content',
-        onShow() {
-          console.log('plugin show');
-        },
-        onHide() {
-          console.log('plugin hide');
-        },
-        onCancel() {
-          console.log('plugin cancel');
-        },
-        onConfirm() {
-          console.log('plugin confirm');
-        }
-      });
-    }
+  methods: {},
+  created() {
+    this.$http.get('/api/shorts').then(response => {
+      if (response.data.err_code === ERR_OK) {
+        this.shortNews = response.data.data;
+      }
+    });
   }
 };
 </script>
@@ -55,5 +50,8 @@ export default {
 
 body {
   background-color: #fbf9fe;
+}
+#app .tabbar {
+  position: fixed;
 }
 </style>
