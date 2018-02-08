@@ -3,12 +3,16 @@
 import Vue from 'vue';
 import FastClick from 'fastclick';
 import VueRouter from 'vue-router';
+
 import App from './App';
 import shorts from './components/shorts/shorts';
 import specials from './components/specials/specials';
-import 'font-awesome/css/font-awesome.min.css';
-import { ConfirmPlugin } from 'vux';
 
+import 'font-awesome/css/font-awesome.min.css';
+import './common/style/base.css';
+import { ConfirmPlugin, AjaxPlugin } from 'vux';
+
+Vue.use(AjaxPlugin);
 Vue.use(ConfirmPlugin);
 Vue.use(VueRouter);
 
