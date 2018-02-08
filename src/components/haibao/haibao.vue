@@ -1,44 +1,28 @@
 <template>
-  <div>
-    <panel :list="formatedShortNews" type="4" @click="showHaibao"></panel>
+  <div class="haibao">
+    <p>{{text}}</p>
+    <img class="haibao-img" src="./1.png" width="100%"/>
   </div>
 </template>
 
 <script>
-import { Panel } from 'vux';
 export default {
   props: {
-    shortNews: {
-      type: Array,
-      default() {
-        return [];
-      }
+    text: {
+      type: String,
+      default: ''
+    },
+    time: {
+      type: String,
+      default: ''
     }
-  },
-  computed: {
-    formatedShortNews() {
-      let list = [];
-      for (let i = 0; i < this.shortNews.length; i++) {
-        list.push({
-          src: '',
-          fallbackSrc: '',
-          title: '',
-          desc: this.shortNews[i].CONTENT,
-          url: '',
-          meta: {
-            source: '来源信息',
-            date: this.shortNews[i].CREATETIME,
-            other: '其他信息'
-          }
-        });
-      }
-      return list;
-    }
-  },
-  components: { Panel }
+  }
 };
 </script>
 
 <style>
-
+.haibao {
+  width: 100%;
+  height: 100%;
+}
 </style>
