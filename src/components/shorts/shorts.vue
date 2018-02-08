@@ -1,6 +1,6 @@
 <template>
   <div>
-    <panel :list="formatedShortNews" type="4" @click="showHaibao"></panel>
+    <panel :list="formatedShortNews" type="4" @click.native="showHaibao"></panel>
     <div v-transfer-dom>
       <x-dialog v-model="haibaoIsShow">
         aaaaa
@@ -51,7 +51,8 @@ export default {
   },
   methods: {
     showHaibao() {
-      this.haibaoIsShow = !this.haibaoIsShow;
+      console.log('haibaoIsShow');
+      this.haibaoIsShow = true;
     }
   },
   directives: {
