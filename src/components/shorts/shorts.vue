@@ -3,11 +3,7 @@
     <panel :list="formatedShortNews" type="4" @click.native="showHaibao"></panel>
     <div v-transfer-dom>
       <x-dialog v-model="haibaoIsShow" :dialog-style="{'max-width': '100%', width: '100%', height: '50%', 'background-color': 'transparent'}">
-<<<<<<< HEAD
         <haibao text="bbbbbbbbbbbbbbbbbbbbbb" time="12:12" @click.native="haibaoIsShow=false">></haibao>
-=======
-        <haibao text="bbbbbbbbbbbbbbbbbbbbbb" time="12:12"></haibao>
->>>>>>> 99745cb2519c937f167e3da4b6842e7ec8e0f8de
         <i class="fa fa-fw fa-times" style="fill:#fff;"></i>
       </x-dialog>
     </div>
