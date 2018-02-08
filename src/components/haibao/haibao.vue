@@ -1,22 +1,12 @@
 <template>
   <div>
     <panel :list="formatedShortNews" type="4" @click="showHaibao"></panel>
-    <div v-transfer-dom>
-      <x-dialog v-model="haibaoIsShow">
-        aaaaa
-      </x-dialog>
-    </div>
   </div>
 </template>
 
 <script>
-import { Panel, XDialog, TransferDomDirective as TransferDom } from 'vux';
+import { Panel } from 'vux';
 export default {
-  data() {
-    return {
-      haibaoIsShow: false
-    };
-  },
   props: {
     shortNews: {
       type: Array,
@@ -45,18 +35,7 @@ export default {
       return list;
     }
   },
-  components: {
-    Panel,
-    XDialog
-  },
-  methods: {
-    showHaibao() {
-      this.haibaoIsShow = !this.haibaoIsShow;
-    }
-  },
-  directives: {
-    TransferDom
-  }
+  components: { Panel }
 };
 </script>
 
