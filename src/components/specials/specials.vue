@@ -1,9 +1,45 @@
 <template>
-<div>我是specitals</div>
+  <div>
+    <panel :list="formatedSpecialNews" type="5"></panel>
+  </div>
 </template>
 
 <script>
-export default {};
+import { Panel } from 'vux';
+
+export default {
+  props: {
+    specialNews: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
+  },
+  computed: {
+    formatedSpecialNews() {
+      let list = [];
+      for (let i = 0; i < this.specialNews.length; i++) {
+        list.push({
+          src: this.specialNews[i].HEAD,
+          fallbackSrc: '',
+          title: this.specialNews[i].TITLE,
+          desc: this.specialNews[i].DESC,
+          url: this.specialNews[i].URL,
+          meta: {
+            source: this.specialNews[i].SOURCE,
+            date: this.specialNews[i].CREATETIME,
+            other: '其他信息'
+          }
+        });
+      }
+      return list;
+    }
+  },
+  components: {
+    Panel
+  }
+};
 </script>
 
 <style>

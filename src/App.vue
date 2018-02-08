@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <view-box ref="viewBox">
-      <router-view :short-news="shortNews"></router-view>
+      <router-view :short-news="shortNews" :special-news="specialNews"></router-view>
       <tabbar slot="bottom" class="tabbar">
         <tabbar-item selected link="/">
           <i slot="icon" class="fa fa-fw fa-user"></i>
@@ -25,7 +25,8 @@ const ERR_OK = 0;
 export default {
   data() {
     return {
-      shortNews: []
+      shortNews: [],
+      specialNews: []
     };
   },
   components: {
@@ -39,6 +40,12 @@ export default {
     this.$http.get('/api/shorts').then(response => {
       if (response.data.err_code === ERR_OK) {
         this.shortNews = response.data.data;
+      }
+    });
+
+    this.$http.get('/api/specials').then(response => {
+      if (response.data.err_code === ERR_OK) {
+        this.specialNews = response.data.data;
       }
     });
   }
