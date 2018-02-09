@@ -58,6 +58,23 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           }
         });
       });
+      app.get('/api/specials', (req, res) => {
+        mysqlaccess.GetSpecialNews(0, (err, rows) => {
+          if (err) {
+            res.json({
+              err_code: 1,
+              err_msg: '',
+              data: null
+            });
+          } else {
+            res.json({
+              err_code: 0,
+              err_msg: '',
+              data: rows
+            });
+          }
+        });
+      });
     }
   },
   plugins: [

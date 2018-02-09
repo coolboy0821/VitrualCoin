@@ -58,6 +58,32 @@ function MysqlAccess() {
       }
     });
   };
+
+  this.GetSpecialNews = (lastid, callback) => {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        if (callback) callback(err);
+      } else {
+        var sql = 'select * from special_news';
+        if (lastid === 0) {
+          sql += ' order by id desc limit 100';
+        } else {
+          sql +=
+            'select * from (' +
+            sql +
+            ' where id>? limit 100) a order by id desc';
+        }
+        connection.query(sql, [lastid], function(err, rows) {
+          if (err) {
+            if (callback) callback(err);
+          } else {
+            if (callback) callback(err, rows);
+          }
+          connection.release();
+        });
+      }
+    });
+  };
 }
 
 module.exports = MysqlAccess;
