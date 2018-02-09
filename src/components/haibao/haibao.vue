@@ -1,7 +1,6 @@
 <template>
   <div class="haibao">
-    <p>{{text}}</p>
-    <img class="haibao-img" :src="haibaoImgSrc" width="100%"/>
+    <img class="haibao-img" :src="haibaoImgSrc" width="80%"/>
     <div id="qrcode" style="display:none"></div>
   </div>
 </template>
@@ -47,36 +46,38 @@ export default {
       // let img3 = new Image();
 
       img.src = '/static/img/bg-qr-hongbao.jpg';
-      console.log(2222);
+
+      let _this = this;
+
       img.onload = function() {
         ctx.drawImage(img, 0, 0, c.width, c.height);
 
         let redirUrl = 'http://weixin.qq.com/r/3y2kvLHES_w0rfXf93jN';
 
+        document.getElementById('qrcode').innerHTML = '';
+
         let qrcode = new QRCode(document.getElementById('qrcode'), redirUrl);
 
-        console.log(qrcode);
-        img2.src = qrcode._el.childNodes[2].src;
-        console.log(qrcode._el.childNodes[2].currentSrc);
-        console.log(qrcode._el.childNodes);
+        // console.log(qrcode);
+        img2 = qrcode._el.childNodes[1];
         img2.onload = function() {
           // 二维码
-          console.log(111);
+          console.log(_this.breakLinesForCanvas);
           ctx.fillStyle = '#e7e7c9';
           ctx.fillRect(416, 806, 128, 128);
           ctx.drawImage(img2, 420, 810, 120, 120);
 
           ctx.font = "20px 'microsoft yahei'";
           ctx.fillStyle = '#e7e7c9';
-          ctx.fillText(this.time, 85, 320);
+          ctx.fillText(_this.time, 85, 320);
           // 设置字体样式
 
           ctx.font = "25px 'microsoft yahei'";
           ctx.fillStyle = '#e7e7c9';
           // ctx.textAlign = "center";
           // 开始绘制文字--对话内容(text,x,y)
-          let result = this.breakLinesForCanvas(
-            this.text,
+          let result = _this.breakLinesForCanvas(
+            _this.text,
             500,
             '25px 微软雅黑'
           );
@@ -84,17 +85,30 @@ export default {
 
           if (result.length > 13) {
             ctx.font = "22px 'microsoft yahei'";
-            result = this.breakLinesForCanvas(this.text, 500, '22px 微软雅黑');
+
+            result = _this.breakLinesForCanvas(
+              _this.text,
+              500,
+              '22px 微软雅黑'
+            );
             lineHeight = 28;
           }
           if (result.length > 16) {
             ctx.font = "20px 'microsoft yahei'";
-            result = this.breakLinesForCanvas(this.text, 500, '20px 微软雅黑');
+            result = _this.breakLinesForCanvas(
+              _this.text,
+              500,
+              '20px 微软雅黑'
+            );
             lineHeight = 25;
           }
           if (result.length > 17) {
             ctx.font = "18px 'microsoft yahei'";
-            result = this.breakLinesForCanvas(this.text, 500, '18px 微软雅黑');
+            result = _this.breakLinesForCanvas(
+              _this.text,
+              500,
+              '18px 微软雅黑'
+            );
             lineHeight = 23;
           }
           result.forEach(function(line, index) {
@@ -102,8 +116,8 @@ export default {
           });
           // 保存生成作品图片
 
-          this.haibaoImgSrc = c.toDataURL('image/jpeg', 1);
-          console.log(this.haibaoImgSrc);
+          _this.haibaoImgSrc = c.toDataURL('image/jpeg', 1);
+          // console.log(_this.haibaoImgSrc);
         };
       };
     },
@@ -157,5 +171,9 @@ export default {
 .haibao {
   width: 100%;
   height: 100%;
+  padding-top: 10%;
+}
+.haibao-img {
+  width: 70%;
 }
 </style>
