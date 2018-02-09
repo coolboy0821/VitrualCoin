@@ -2,7 +2,7 @@
   <div class="haibao">
     <p>{{text}}</p>
     <img class="haibao-img" :src="haibaoImgSrc" width="100%"/>
-    <div id="qrcode">二维码位置1</div>
+    <div id="qrcode" style="display:none"></div>
   </div>
 </template>
 
