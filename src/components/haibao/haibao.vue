@@ -62,7 +62,6 @@ export default {
         img2 = qrcode._el.childNodes[1];
         img2.onload = function() {
           // 二维码
-          console.log(_this.breakLinesForCanvas);
           ctx.fillStyle = '#e7e7c9';
           ctx.fillRect(416, 806, 128, 128);
           ctx.drawImage(img2, 420, 810, 120, 120);
@@ -118,6 +117,10 @@ export default {
 
           _this.haibaoImgSrc = c.toDataURL('image/jpeg', 1);
           // console.log(_this.haibaoImgSrc);
+          // 隐藏
+          setTimeout(function() {
+            _this.$vux.loading.hide();
+          }, 1000);
         };
       };
     },

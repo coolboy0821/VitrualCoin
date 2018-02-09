@@ -10,11 +10,12 @@ import specials from './components/specials/specials';
 
 import 'font-awesome/css/font-awesome.min.css';
 import './common/style/base.css';
-import { ConfirmPlugin, AjaxPlugin } from 'vux';
+import { ConfirmPlugin, AjaxPlugin, LoadingPlugin } from 'vux';
 
 Vue.use(AjaxPlugin);
 Vue.use(ConfirmPlugin);
 Vue.use(VueRouter);
+Vue.use(LoadingPlugin);
 
 const routes = [
   { path: '/', component: shorts },

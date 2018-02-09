@@ -57,6 +57,10 @@ export default {
   },
   methods: {
     showHaibao(item) {
+      // 显示
+      this.$vux.loading.show({
+        text: 'loading'
+      });
       console.log(item);
       this.haibaoIsShow = true;
       this.curText = item.desc;
