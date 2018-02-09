@@ -1,12 +1,20 @@
 <template>
   <div class="haibao">
     <p>{{text}}</p>
-    <img class="haibao-img" src="./1.png" width="100%"/>
+    <img class="haibao-img" :src="haibaoImgSrc" width="100%"/>
+    <div id="qrcode" style="display:none"></div>
   </div>
 </template>
 
 <script>
+import QRCode from 'qrcodejs2';
+
 export default {
+  data() {
+    return {
+      haibaoImgSrc: ''
+    };
+  },
   props: {
     text: {
       type: String,
@@ -15,6 +23,131 @@ export default {
     time: {
       type: String,
       default: ''
+    }
+  },
+  watch: {
+    text: function(newQuestion, oldQuestion) {
+      this.hechengHBImg();
+    }
+  },
+  methods: {
+    hechengHBImg() {
+      console.log('aaa');
+      // 画布区域
+      let c = document.createElement('canvas');
+      let ctx = c.getContext('2d');
+      c.width = 600;
+      c.height = 1000;
+      ctx.rect(0, 0, c.width, c.height);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+
+      let img = new Image(); // 背景
+      let img2 = new Image(); // 二维码
+      // let img3 = new Image();
+
+      img.src = '/static/img/bg-qr-hongbao.jpg';
+      console.log(2222);
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+
+        let redirUrl = 'http://weixin.qq.com/r/3y2kvLHES_w0rfXf93jN';
+
+        let qrcode = new QRCode(document.getElementById('qrcode'), redirUrl);
+
+        console.log(qrcode);
+        img2.src = qrcode._el.childNodes[2].src;
+        console.log(qrcode._el.childNodes[2].currentSrc);
+        console.log(qrcode._el.childNodes);
+        img2.onload = function() {
+          // 二维码
+          console.log(111);
+          ctx.fillStyle = '#e7e7c9';
+          ctx.fillRect(416, 806, 128, 128);
+          ctx.drawImage(img2, 420, 810, 120, 120);
+
+          ctx.font = "20px 'microsoft yahei'";
+          ctx.fillStyle = '#e7e7c9';
+          ctx.fillText(this.time, 85, 320);
+          // 设置字体样式
+
+          ctx.font = "25px 'microsoft yahei'";
+          ctx.fillStyle = '#e7e7c9';
+          // ctx.textAlign = "center";
+          // 开始绘制文字--对话内容(text,x,y)
+          let result = this.breakLinesForCanvas(
+            this.text,
+            500,
+            '25px 微软雅黑'
+          );
+          let lineHeight = 35;
+
+          if (result.length > 13) {
+            ctx.font = "22px 'microsoft yahei'";
+            result = this.breakLinesForCanvas(this.text, 500, '22px 微软雅黑');
+            lineHeight = 28;
+          }
+          if (result.length > 16) {
+            ctx.font = "20px 'microsoft yahei'";
+            result = this.breakLinesForCanvas(this.text, 500, '20px 微软雅黑');
+            lineHeight = 25;
+          }
+          if (result.length > 17) {
+            ctx.font = "18px 'microsoft yahei'";
+            result = this.breakLinesForCanvas(this.text, 500, '18px 微软雅黑');
+            lineHeight = 23;
+          }
+          result.forEach(function(line, index) {
+            ctx.fillText(line, 50, lineHeight * index + 360);
+          });
+          // 保存生成作品图片
+
+          this.haibaoImgSrc = c.toDataURL('image/jpeg', 1);
+          console.log(this.haibaoImgSrc);
+        };
+      };
+    },
+    findBreakPoint(text, width, context) {
+      let min = 0;
+      let max = text.length - 1;
+
+      while (min <= max) {
+        let middle = Math.floor((min + max) / 2);
+        let middleWidth = context.measureText(text.substr(0, middle)).width;
+        let oneCharWiderThanMiddleWidth = context.measureText(
+          text.substr(0, middle + 1)
+        ).width;
+        if (middleWidth <= width && oneCharWiderThanMiddleWidth > width) {
+          return middle;
+        }
+        if (middleWidth < width) {
+          min = middle + 1;
+        } else {
+          max = middle - 1;
+        }
+      }
+      return -1;
+    },
+    breakLinesForCanvas(text, width, font) {
+      let c = document.createElement('canvas');
+      let ctx = c.getContext('2d');
+      let result = [];
+      let breakPoint = 0;
+
+      if (font) {
+        ctx.font = font;
+      }
+
+      while ((breakPoint = this.findBreakPoint(text, width, ctx)) !== -1) {
+        result.push(text.substr(0, breakPoint));
+        text = text.substr(breakPoint);
+      }
+
+      if (text) {
+        result.push(text);
+      }
+
+      return result;
     }
   }
 };
