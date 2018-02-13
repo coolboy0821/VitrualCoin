@@ -4,12 +4,13 @@
       <router-view :short-news="shortNews" :special-news="specialNews"></router-view>
       <tabbar slot="bottom" class="tabbar">
         <tabbar-item :selected="$route.path == '/'" link="/">
-          <i slot="icon" class="fa fa-fw fa-user"></i>
-          <i slot="icon-active" class="fa fa-fw fa-users"></i>
+          <font-awesome-icon slot="icon" :icon="['far','list-alt']" />
+          <font-awesome-icon slot="icon-active" :icon="['fas','list-alt']" />
           <span slot="label">短讯</span>
         </tabbar-item>
         <tabbar-item :selected="$route.path == '/specials'" link="/specials">
-          <i slot="icon" class="fa fa-fw fa-times"></i>
+          <font-awesome-icon slot="icon" :icon="['far','flag']" />
+          <font-awesome-icon slot="icon-active" :icon="['fas','flag']" />
           <span slot="label">专栏</span>
         </tabbar-item>
       </tabbar>
@@ -80,5 +81,13 @@ body {
 }
 #app .tabbar {
   position: fixed;
+}
+.weui-tabbar__icon > svg {
+  font-size: 24px;
+  color: #999999;
+}
+
+.weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon > svg {
+  color: #09bb07;
 }
 </style>

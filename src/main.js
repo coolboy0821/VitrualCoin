@@ -7,7 +7,12 @@ import App from './App';
 import shorts from './components/shorts/shorts';
 import specials from './components/specials/specials';
 
-import 'font-awesome/css/font-awesome.min.css';
+import fontawesome from '@fortawesome/fontawesome';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import solid from '@fortawesome/fontawesome-free-solid';
+import regular from '@fortawesome/fontawesome-free-regular';
+import brands from '@fortawesome/fontawesome-free-brands';
+
 import './common/style/base.css';
 import { ConfirmPlugin, AjaxPlugin } from 'vux';
 
@@ -15,6 +20,12 @@ Vue.use(AjaxPlugin);
 Vue.use(ConfirmPlugin);
 Vue.use(VueRouter);
 Vue.use(Vuex);
+
+fontawesome.library.add(solid);
+fontawesome.library.add(regular);
+fontawesome.library.add(brands);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 const routes = [
   { path: '/', component: shorts },
