@@ -97,6 +97,7 @@ export default {
           });
           // 保存生成作品图片
           this.haibaoImgSrc = c.toDataURL('image/jpeg', 1);
+          this.$emit('on-item-success');
         };
       };
     },

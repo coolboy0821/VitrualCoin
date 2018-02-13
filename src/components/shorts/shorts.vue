@@ -2,8 +2,8 @@
   <div>
     <panel :list="formatedShortNews" type="4" @on-click-item="showHaibao"></panel>
     <div v-transfer-dom>
-      <x-dialog v-model="haibaoIsShow" :dialog-style="{'max-width': '100%', width: '100%', height: '100%', 'background-color': 'transparent'}">
-        <haibao :text="curText" :time="curTime" @click.native="haibaoIsShow=false"></haibao>
+      <x-dialog v-model="haibaoIsShow" @click.native="haibaoIsShow=false" :dialog-style="{'max-width': '100%', width: '100%', height: '100%', 'background-color': 'transparent'}">
+        <haibao :text="curText" :time="curTime" @on-item-success="haiBaoIsSuccess"></haibao>
         <i class="fa fa-fw fa-times" style="fill:#fff;"></i>
       </x-dialog>
     </div>
@@ -57,10 +57,12 @@ export default {
   },
   methods: {
     showHaibao(item) {
-      // 显示
-      // this.$store.commit('updateLoadingStatus', { isLoading: true });
+      this.$store.commit('updateLoadingStatus', { isLoading: true });
       this.curText = item.desc;
       this.curTime = item.meta.date;
+    },
+    haiBaoIsSuccess() {
+      this.$store.commit('updateLoadingStatus', { isLoading: false });
       this.haibaoIsShow = true;
     }
   },
