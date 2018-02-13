@@ -1,6 +1,6 @@
 <template>
   <div>
-    <panel :list="formatedSpecialNews" type="5"></panel>
+    <panel :list="formatedSpecialNews" type="5" @on-click-item="gotoWeixinPage"></panel>
   </div>
 </template>
 
@@ -34,6 +34,11 @@ export default {
         });
       }
       return list;
+    }
+  },
+  methods: {
+    gotoWeixinPage(item) {
+      window.location.href = item.url;
     }
   },
   components: {

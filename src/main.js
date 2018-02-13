@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import FastClick from 'fastclick';
 import VueRouter from 'vue-router';
+import Vuex from 'vuex';
 
 import App from './App';
 import shorts from './components/shorts/shorts';
@@ -10,12 +11,12 @@ import specials from './components/specials/specials';
 
 import 'font-awesome/css/font-awesome.min.css';
 import './common/style/base.css';
-import { ConfirmPlugin, AjaxPlugin, LoadingPlugin } from 'vux';
+import { ConfirmPlugin, AjaxPlugin } from 'vux';
 
 Vue.use(AjaxPlugin);
 Vue.use(ConfirmPlugin);
 Vue.use(VueRouter);
-Vue.use(LoadingPlugin);
+Vue.use(Vuex);
 
 const routes = [
   { path: '/', component: shorts },
@@ -27,12 +28,27 @@ let router = new VueRouter({
   routes
 });
 
+const store = new Vuex.Store({}); // 这里你可能已经有其他 module
+
+store.registerModule('vux', {
+  // 名字自己定义
+  state: {
+    isLoading: false
+  },
+  mutations: {
+    updateLoadingStatus(state, payload) {
+      state.isLoading = payload.isLoading;
+    }
+  }
+});
+
 FastClick.attach(document.body);
 
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
+  store,
   router,
   render: h => h(App)
 }).$mount('#app-box');

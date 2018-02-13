@@ -58,13 +58,10 @@ export default {
   methods: {
     showHaibao(item) {
       // 显示
-      this.$vux.loading.show({
-        text: 'loading'
-      });
-      console.log(item);
-      this.haibaoIsShow = true;
+      // this.$store.commit('updateLoadingStatus', { isLoading: true });
       this.curText = item.desc;
       this.curTime = item.meta.date;
+      this.haibaoIsShow = true;
     }
   },
   directives: {
