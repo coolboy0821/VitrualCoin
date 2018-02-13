@@ -38,5 +38,4 @@ router.get('/specials', function(req, res) {
   });
 });
 
-
 module.exports = router;

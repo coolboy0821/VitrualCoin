@@ -28,13 +28,10 @@ let router = new VueRouter({
   routes
 });
 
-const store = new Vuex.Store({}); // 这里你可能已经有其他 module
+const store = new Vuex.Store({});
 
 store.registerModule('vux', {
-  // 名字自己定义
-  state: {
-    isLoading: false
-  },
+  state: { isLoading: false },
   mutations: {
     updateLoadingStatus(state, payload) {
       state.isLoading = payload.isLoading;
@@ -44,7 +41,7 @@ store.registerModule('vux', {
 
 FastClick.attach(document.body);
 
-Vue.config.productionTip = false;
+// Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({

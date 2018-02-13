@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { Tabbar, TabbarItem, Confirm, ViewBox, Loading } from 'vux';
+import { Tabbar, TabbarItem, Confirm, ViewBox, Loading, dateFormat } from 'vux';
 import { mapState } from 'vuex';
 
 const ERR_OK = 0;
@@ -43,9 +43,9 @@ export default {
     this.$http.get('/api/shorts').then(response => {
       if (response.data.err_code === ERR_OK) {
         response.data.data.forEach(item => {
-          item.CREATETIME = item.CREATETIME.replace('T', '  ').replace(
-            '.000Z',
-            ''
+          item.CREATETIME = dateFormat(
+            Date.parse(item.CREATETIME),
+            'YYYY-MM-DD HH:mm:ss'
           );
         });
         this.shortNews = response.data.data;
@@ -55,13 +55,12 @@ export default {
     this.$http.get('/api/specials').then(response => {
       if (response.data.err_code === ERR_OK) {
         response.data.data.forEach(item => {
-          item.CREATETIME = item.CREATETIME.replace('T', '  ').replace(
-            '.000Z',
-            ''
+          item.CREATETIME = dateFormat(
+            Date.parse(item.CREATETIME),
+            'YYYY-MM-DD HH:mm:ss'
           );
         });
         this.specialNews = response.data.data;
-        console.log(this.specialNews);
       }
     });
   },
