@@ -3,12 +3,12 @@
     <view-box ref="viewBox">
       <router-view :short-news="shortNews" :special-news="specialNews"></router-view>
       <tabbar slot="bottom" class="tabbar">
-        <tabbar-item selected link="/">
+        <tabbar-item :selected="$route.path == '/'" link="/">
           <i slot="icon" class="fa fa-fw fa-user"></i>
           <i slot="icon-active" class="fa fa-fw fa-users"></i>
           <span slot="label">短讯</span>
         </tabbar-item>
-        <tabbar-item link="/specials">
+        <tabbar-item :selected="$route.path == '/specials'" link="/specials">
           <i slot="icon" class="fa fa-fw fa-times"></i>
           <span slot="label">专栏</span>
         </tabbar-item>
